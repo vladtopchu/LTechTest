@@ -10,11 +10,11 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface LTechApi {
-    @GET("/v1/phone_masks")
+    @GET("v1/phone_masks")
     suspend fun getPhoneMask(): PhoneMaskResponse
 
     @FormUrlEncoded
-    @POST("/v1/auth")
+    @POST("v1/auth")
     suspend fun auth(
         @Field(Constants.AuthForm.PHONE)
         phone: String,
@@ -22,6 +22,6 @@ interface LTechApi {
         password: String,
     ): AuthResponse
 
-    @GET("/v1/posts")
+    @GET("v1/posts")
     suspend fun getPosts(): List<PostResponse>
 }
