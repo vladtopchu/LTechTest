@@ -1,16 +1,15 @@
 package com.ltech.test.presentation.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.ltech.test.R
 import com.ltech.test.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -49,18 +48,19 @@ class LoginFragment : Fragment() {
 
                 state.phoneMask != null -> {
                     val phoneMask = state.phoneMask
-                    if(phoneMask.isEmpty())
+                    if(phoneMask.isEmpty()) {
                         Toast.makeText(
                             requireContext(),
                             "Маска пуста",
                             Toast.LENGTH_SHORT
                         ).show()
-                    else
+                    } else {
                         Toast.makeText(
                             requireContext(),
                             "Маска готова: $phoneMask",
                             Toast.LENGTH_SHORT
                         ).show()
+                    }
                 }
 
                 state.success == true -> {
