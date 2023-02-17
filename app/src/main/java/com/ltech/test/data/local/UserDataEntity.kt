@@ -2,8 +2,8 @@ package com.ltech.test.data.local
 
 import androidx.room.Entity
 
-@Entity
-data class UserConfigEntity (
+@Entity("userData")
+data class UserDataEntity (
     var phone: String,
     var password: String
 )

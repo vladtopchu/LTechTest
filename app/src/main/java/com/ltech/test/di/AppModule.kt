@@ -1,5 +1,8 @@
 package com.ltech.test.di
 
+import android.app.Application
+import androidx.room.Room
+import com.ltech.test.data.local.LTechDatabase
 import com.ltech.test.data.remote.LTechApi
 import com.ltech.test.data.repository.LTechRepositoryImpl
 import com.ltech.test.domain.repository.LTechRepository
@@ -32,5 +35,14 @@ object AppModule {
         return LTechRepositoryImpl(api)
     }
 
+    @Provides
+    @Singleton
+    fun provideLTechDatabase(app: Application): LTechDatabase {
+        return Room.databaseBuilder(
+            app,
+            LTechDatabase::class.java,
+            "ltech_db"
+        ).build()
+    }
 
 }

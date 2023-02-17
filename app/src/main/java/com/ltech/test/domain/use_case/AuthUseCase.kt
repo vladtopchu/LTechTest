@@ -11,13 +11,14 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+
 class AuthUseCase @Inject constructor(
     private val repository: LTechRepository
 ) {
     operator fun invoke(phone: String, password: String): Flow<Resource<Auth>> = flow {
         try {
             emit(Resource.Loading())
-            val result = repository.auth(phone, password).toModel()
+            val result = repository.proceedAuth(phone, password)
             emit(Resource.Success(result))
         } catch (e: HttpException) {
             val message = e.localizedMessage ?: HTTP_ERROR_MESSAGE
