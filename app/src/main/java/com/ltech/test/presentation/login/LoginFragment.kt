@@ -1,13 +1,17 @@
 package com.ltech.test.presentation.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ltech.test.databinding.FragmentLoginBinding
+import com.ltech.test.utils.toastShort
+import com.vicmikhailau.maskededittext.MaskedFormatter
+import com.vicmikhailau.maskededittext.MaskedWatcher
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,70 +26,57 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            viewModel.login("", "")
+        binding.buttonEnter.setOnClickListener {
+            val clearPhone = "[^0-9]".toRegex().replace(binding.inputPhone.text.toString(), "")
+            Log.d("CLEAR PHONE", clearPhone)
+            viewModel.login(clearPhone, binding.inputPassword.text.toString())
         }
 
         viewModel.loginState.observe(viewLifecycleOwner) { state ->
             when {
+                state.savedPhone != null && state.savedPassword != null -> {
+                    binding.inputPhone.setText(state.savedPhone)
+                    binding.inputPassword.setText(state.savedPassword)
+                }
+
                 state.isLoading -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Загрузка",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                state.phoneMask != null -> {
-                    val phoneMask = state.phoneMask
-                    if(phoneMask.isEmpty()) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Маска пуста",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Маска готова: $phoneMask",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                state.success == true -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Логин успешен",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                state.success == false -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Логин неудачен",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.buttonEnter.isEnabled = false
+                    toastShort("Загрузка")
                 }
 
                 state.error != null -> {
-                    Toast.makeText(
-                        requireContext(),
-                        state.error,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.buttonEnter.isEnabled = true
+                    toastShort(state.error)
                 }
+
+                state.phoneMask != null -> {
+                    binding.buttonEnter.isEnabled = true
+
+                    val phoneMask = state.phoneMask.replace("Х", "#")
+                    Log.d("TEST", phoneMask)
+
+                    val formatter = MaskedFormatter(phoneMask)
+                    binding.inputPhone.hint = phoneMask
+                    binding.inputPhone.addTextChangedListener(MaskedWatcher(formatter, binding.inputPhone))
+                }
+
+                state.loginSuccess == true -> {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                }
+
+                state.loginSuccess == false -> {
+                    binding.buttonEnter.isEnabled = true
+                    toastShort("Произошла ошибка")
+                }
+
             }
         }
     }

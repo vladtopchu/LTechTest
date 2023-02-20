@@ -4,12 +4,11 @@ import androidx.room.*
 
 @Dao
 interface AppDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveUserData(userEntity: UserDataEntity)
 
-    @Query("SELECT * FROM posts LIMIT 1")
-    suspend fun getUserData(): UserDataEntity
+    @Query("SELECT * FROM user LIMIT 1")
+    suspend fun getUserData(): UserDataEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPosts(posts: List<PostEntity>)

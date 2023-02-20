@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -43,6 +44,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    implementation 'io.github.vicmikhailau:MaskedEditText:4.0.7'
+
     // SYMBOL PROCESSOR
     implementation "com.google.devtools.ksp:symbol-processing-api:1.8.0-1.0.8"
 
@@ -62,6 +65,7 @@ dependencies {
 
     // ROOM
     implementation "androidx.room:room-runtime:2.5.0"
+    implementation "androidx.room:room-ktx:2.5.0"
     annotationProcessor "androidx.room:room-compiler:2.5.0"
     kapt "androidx.room:room-compiler:2.5.0"
 

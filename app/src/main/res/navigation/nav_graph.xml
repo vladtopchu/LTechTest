@@ -10,6 +10,21 @@
         android:name="com.ltech.test.presentation.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_LoginFragment_to_MainFragment"
+            app:destination="@id/MainFragment">
+<!--            <argument-->
+<!--                android:name="postId"-->
+<!--                app:argType="integer"-->
+<!--                android:defaultValue="0" />-->
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="com.ltech.test.presentation.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
 
     </fragment>
 

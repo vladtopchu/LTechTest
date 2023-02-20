@@ -2,6 +2,7 @@ package com.ltech.test.di
 
 import android.app.Application
 import androidx.room.Room
+import com.ltech.test.data.local.AppDao
 import com.ltech.test.data.local.LTechDatabase
 import com.ltech.test.data.remote.LTechApi
 import com.ltech.test.data.repository.LTechRepositoryImpl
@@ -21,6 +22,23 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideLTechDatabase(app: Application): LTechDatabase {
+        return Room.databaseBuilder(
+            app,
+            LTechDatabase::class.java,
+            "ltech_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDao(db: LTechDatabase): AppDao {
+        return db.dao
+    }
+
+
+    @Provides
+    @Singleton
     fun provideLTechApi(): LTechApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -31,18 +49,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLTechRepository(api: LTechApi): LTechRepository {
-        return LTechRepositoryImpl(api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLTechDatabase(app: Application): LTechDatabase {
-        return Room.databaseBuilder(
-            app,
-            LTechDatabase::class.java,
-            "ltech_db"
-        ).build()
+    fun provideLTechRepository(api: LTechApi, dao: AppDao): LTechRepository {
+        return LTechRepositoryImpl(api, dao)
     }
 
 }

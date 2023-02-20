@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Bold" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.TabName" parent="Text.Bold">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+</resources>

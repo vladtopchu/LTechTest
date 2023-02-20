@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ltech.test.databinding.FragmentSecondBinding
+import com.ltech.test.databinding.FragmentPostBinding
 
 class PostFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentPostBinding.inflate(inflater, container, false)
         return binding.root
 
     }

@@ -16,9 +16,9 @@ interface LTechApi {
     @FormUrlEncoded
     @POST("v1/auth")
     suspend fun auth(
-        @Field(Constants.AuthForm.PHONE)
+        @Field("phone")
         phone: String,
-        @Field(Constants.AuthForm.PASSWORD)
+        @Field("password")
         password: String,
     ): AuthResponse
 
