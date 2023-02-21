@@ -1,7 +1,8 @@
 package com.ltech.test.utils
 
 object Constants {
-    const val BASE_URL = "http://dev-exam.l-tech.ru/api/"
+    const val BASE_URL = "http://dev-exam.l-tech.ru"
+    const val API_URL = "$BASE_URL/api/"
 
     const val HTTP_ERROR_MESSAGE = "Сервер вернул ошибку. Повторите позже"
     const val IO_ERROR_MESSAGE = "Произошла ошибка. Проверьте подключение к сети"

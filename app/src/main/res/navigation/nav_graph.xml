@@ -13,10 +13,6 @@
         <action
             android:id="@+id/action_LoginFragment_to_MainFragment"
             app:destination="@id/MainFragment">
-<!--            <argument-->
-<!--                android:name="postId"-->
-<!--                app:argType="integer"-->
-<!--                android:defaultValue="0" />-->
         </action>
     </fragment>
 
@@ -25,6 +21,22 @@
         android:name="com.ltech.test.presentation.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_MainFragment_to_PostFragment"
+            app:destination="@id/PostFragment">
+            <argument
+                android:name="postId"
+                app:argType="string"
+                android:defaultValue="" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/PostFragment"
+        android:name="com.ltech.test.presentation.post.PostFragment"
+        android:label="PostFragment"
+        tools:layout="@layout/fragment_post">
 
     </fragment>
 

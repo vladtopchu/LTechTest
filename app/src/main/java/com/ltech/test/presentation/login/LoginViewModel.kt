@@ -1,5 +1,6 @@
 package com.ltech.test.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +28,7 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             val userData = repository.getUserData()
-            if(userData == null)
+            if(userData == null) {
                 repository.getPhoneMask().onEach { result ->
                     when (result) {
                         is Resource.Success -> {
@@ -41,9 +42,15 @@ class LoginViewModel @Inject constructor(
                             mLoginState.postValue(LoginStateList(isLoading = true))
                         }
                     }
-                }
-            else
-                mLoginState.postValue(LoginStateList(savedPhone = userData.phone, savedPassword = userData.password))
+                }.launchIn(this)
+            } else {
+                mLoginState.postValue(
+                    LoginStateList(
+                        savedPhone = userData.phone,
+                        savedPassword = userData.password
+                    )
+                )
+            }
         }
     }
 

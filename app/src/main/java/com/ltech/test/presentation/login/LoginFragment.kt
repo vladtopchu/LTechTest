@@ -36,7 +36,6 @@ class LoginFragment : Fragment() {
 
         binding.buttonEnter.setOnClickListener {
             val clearPhone = "[^0-9]".toRegex().replace(binding.inputPhone.text.toString(), "")
-            Log.d("CLEAR PHONE", clearPhone)
             viewModel.login(clearPhone, binding.inputPassword.text.toString())
         }
 
@@ -61,7 +60,6 @@ class LoginFragment : Fragment() {
                     binding.buttonEnter.isEnabled = true
 
                     val phoneMask = state.phoneMask.replace("Х", "#")
-                    Log.d("TEST", phoneMask)
 
                     val formatter = MaskedFormatter(phoneMask)
                     binding.inputPhone.hint = phoneMask

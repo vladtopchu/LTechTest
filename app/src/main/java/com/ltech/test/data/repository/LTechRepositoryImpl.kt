@@ -1,7 +1,9 @@
 package com.ltech.test.data.repository
 
+import android.util.Log
 import com.ltech.test.data.local.AppDao
 import com.ltech.test.data.local.LTechDatabase
+import com.ltech.test.data.local.PostEntity
 import com.ltech.test.data.local.UserDataEntity
 import com.ltech.test.data.remote.LTechApi
 import com.ltech.test.domain.model.Auth
@@ -53,10 +55,24 @@ class LTechRepositoryImpl @Inject constructor(
 
     override fun getPosts(): Flow<Resource<List<Post>>> = flow {
         try {
+            val cache = dao.getPosts()
+            if(cache.isNotEmpty()) {
+                emit(Resource.Success(cache.map { el -> el.toModel() }))
+            }
+
             emit(Resource.Loading())
             val response = api.getPosts()
             val result = response.map { el -> el.toModel() }
             emit(Resource.Success(result))
+            dao.clearPosts()
+            dao.insertPosts(result.map { el -> PostEntity(
+                id = el.id,
+                title = el.title,
+                text = el.text,
+                image = el.image,
+                sort = el.sort,
+                date = el.date
+            )})
         } catch (e: HttpException) {
             val message = e.localizedMessage ?: HTTP_ERROR_MESSAGE
             emit(Resource.Error(message))
@@ -64,6 +80,11 @@ class LTechRepositoryImpl @Inject constructor(
             val message = e.localizedMessage ?: IO_ERROR_MESSAGE
             emit(Resource.Error(message))
         }
+    }
+
+    override suspend fun getPostById(postId: String): Post {
+        val response = dao.getPostById(postId)
+        return response.toModel()
     }
 
     override suspend fun getUserData(): UserData?  {

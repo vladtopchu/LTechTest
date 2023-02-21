@@ -1,7 +1,7 @@
 package com.ltech.test.domain.model
 
 data class Post(
-    var id: Int,
+    var id: String,
     var title: String,
     var text: String,
     var image: String,

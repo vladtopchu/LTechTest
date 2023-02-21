@@ -11,6 +11,7 @@ interface LTechRepository {
     fun getPhoneMask(): Flow<Resource<PhoneMask>>
     fun proceedAuth(phone: String, password: String): Flow<Resource<Auth>>
     fun getPosts(): Flow<Resource<List<Post>>>
+    suspend fun getPostById(postId: String): Post
     suspend fun getUserData(): UserData?
     suspend fun saveUserData(phone: String, password: String)
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    repository: LTechRepository
+    private val repository: LTechRepository
 ): ViewModel() {
 
     private val mPostsState = MutableLiveData(MainStateList())
@@ -22,6 +22,10 @@ class MainViewModel @Inject constructor(
         get() = mPostsState
 
     init {
+        getPosts()
+    }
+
+    fun getPosts() {
         repository.getPosts().onEach { result ->
             when (result) {
                 is Resource.Success -> {

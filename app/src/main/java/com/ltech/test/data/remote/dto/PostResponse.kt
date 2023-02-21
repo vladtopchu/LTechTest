@@ -3,7 +3,7 @@ package com.ltech.test.data.remote.dto
 import com.ltech.test.domain.model.Post
 
 data class PostResponse(
-    var id: Int? = null,
+    var id: String? = null,
     var title: String? = null,
     var text: String? = null,
     var image: String? = null,
@@ -11,7 +11,7 @@ data class PostResponse(
     var date: String? = null
 ) {
     fun toModel() = Post(
-        id ?: -1,
+        id ?: "",
         title ?: "",
         text ?: "",
         image ?: "",
